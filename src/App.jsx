@@ -32,8 +32,8 @@ function App() {
   }
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(newmovie)
-    setMovies([...movies, newmovie])
+    console.log(newMovie)
+    setMovies([...movies, newMovie])
     setNewMovie({
       title: '',
       description: '',
