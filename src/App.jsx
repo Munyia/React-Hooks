@@ -12,24 +12,25 @@ function App() {
   const [filter, setFilter] = useState()
   const [title, setTitle] = useState()
   const [rating, setRating] = useState()
+  const [showAdd, setShowAdd] = useState(false)
   const [newMovie, setNewMovie] = useState({
     title: '',
     description: '',
     posterURL: '',
-    rating: '0'
+    rating: 0
   })
 
-  console.log(movies);
-  function handleTitle(e) {
-    setTitle(e.target.value)
-    setFilter(e.target.value)
-    setRating('')
-  }
-  function handleRating(e) {
-    setRating(e.target.value)
-    setFilter(e.target.value)
-    setTitle('')
-  }
+  // console.log(movies);
+  // function handleTitle(e) {
+  //   setTitle(e.target.value)
+  //   setFilter(e.target.value)
+  //   setRating('')
+  // }
+  // function handleRating(e) {
+  //   setRating(e.target.value)
+  //   setFilter(e.target.value)
+  //   setTitle('')
+  // }
   function handleSubmit(e) {
     e.preventDefault()
     console.log(newMovie)
@@ -41,24 +42,33 @@ function App() {
       rating: '0'
     })
   }
+  function toggleShow() {
+    setShowAdd(!showAdd)
+  }
     return (
     <>
-    <input type="text" placeholder='Filter by title' value={title} onChange={handleTitle}/>
-    <input type="number" placeholder='Filter by rating' value={rating} onChange={handleRating}/> 
+    <input type='text' placeholder='Filter by title' value={title} onChange={(e) => setTitle(e.target.value)} />
+    <input type='text' placeholder='Filter by rating' value={rating} onChange={(e) => setRating(e.target.value)} />
+    {/* <input type="text" placeholder='Filter by title' value={title} onChange={handleTitle}/>
+    <input type="number" placeholder='Filter by rating' value={rating} onChange={handleRating}/>  */}
     <div>
-      <div className='relative'>
-        <p>Add Movie</p>
-        <form className='hidden group-hover:flex-col absolute' onSubmit={handleSubmit}>
+      <div className='relative group'>
+        <p onClick={toggleShow}>Add Movie</p>
+        {
+          showAdd &&
+
+          <form className='  ' onSubmit={handleSubmit}>
           <input type="text" placeholder='Title' value={newMovie.title} onChange={(e) => setNewMovie({...newMovie, title: e.target.value})}/>
           <input type="text" placeholder='Description' value={newMovie.description} onChange={(e) => setNewMovie({...newMovie, description: e.target.value})}/>
           <input type="text" placeholder='Paste Image URL' value={newMovie.posterURL} onChange={(e) => setNewMovie({...newMovie, posterURL: e.target.value})}/>
           <input type="number" placeholder='Rating' value={newMovie.rating} onChange={(e) => setNewMovie({...newMovie, rating: e.target.value})}/>
-          <button type="submit" onClick={() => setMovies([...movies, newMovie])}>Add</button>
+          <button type="submit">Add</button>
         </form>
+        }
       </div>
       </div>
       {
-     filter?<Filter title={title} rating={rating} list={movies}/>:<MovieList list={movies}/>
+        (rating || title)?<Filter list={movies} title={title} rating={rating}/>:<MovieList list={movies}/>
       }
     
   
